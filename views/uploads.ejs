@@ -12,22 +12,37 @@
     rel="stylesheet"
 />
 </head>
-<body class="bg-blue-200 min-h-screen p-5">
+<body class="bg-gray-800 min-h-screen">
 
-   
-  <h1 class="text-2xl font-bold mb-6 text-4xl">📂 Your Files</h1>
-  <button onclick="showpop()" 
-  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 absolute top-4 right-24 text-2xl mb-4 rounded">
-      Upload File
-     </button>
+        <div class="fixed top-0 z-50 w-full flex items-center justify-between px-4 p-4
+      font-medium text-[1.2rem] text-white bg-opacity-35 backdrop-blur-sm border-b border-gray-800">
+     <h1 class="text-2xl font-bold  flex gap-3 text-4xl">
+       <img src="/logo.png" class="h-12 w-12 shadow-[0_0_20px_rgba(134,239,172,0.4)]  
+            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] rounded-full"/>
+       Shiraj`s Drive</h1>
+  <button onclick="showpop()"
+  class="bg-green-500 shadow-[0_0_20px_rgba(134,239,172,0.4)]  
+            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]  text-white font-bold py-3 px-5
+  absolute top-4 right-4 text-xl rounded block sm:block md:inline-block">
+  Upload File
+</button>
 
-  <% if (!files || files.length === 0) { %>
+    </div>
+ 
+     <main class="  min-h-screen p-5 mt-20">
+      <% if (!files || files.length === 0) { %>
     <p class="text-gray-600">No files uploaded yet.</p>
   <% } else { %>
 
   <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
     <% files.forEach(file => { %>
-      <div class="bg-gray-400 p-4 rounded border-black shadow-xs ">
+      <div 
+      class="  bg-black text-white rounded-2xl border border-gray-700 shadow-[0_0_20px_rgba(134,239,172,0.4)] p-3
+            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] 
+                         transition-all duration-300
+           "
+      
+      >
 
    <% if (file.fileType && file.fileType.startsWith('image/')) { %>
 
@@ -36,14 +51,14 @@
      <% } else if (file.fileType === 'application/pdf') { %>
 
   <!-- PDF -->
-  <div class="h-40 flex items-center flex-col justify-center bg-red-100 rounded mb-2 text-6xl">
+  <div class="h-40 flex items-center text-black flex-col justify-center bg-red-100 rounded mb-2 text-6xl">
     <i class="ri-file-text-line"></i> <p class="text-lg">PDF file</p>
   </div>    
   
       <% } else if (file.fileType && file.fileType.includes('video')) { %>
 
   <!-- VIDEO ICON -->
-  <div class="h-40 flex items-center flex-col justify-center bg-purple-100 rounded mb-2 text-6xl">
+  <div class="h-40   text-black items-center flex-col justify-center bg-purple-100 rounded mb-2 text-6xl">
     <i class="ri-folder-video-fill"></i> <p class="text-lg">VIDEO</p>
   </div>
      
@@ -93,11 +108,11 @@
 
   <% } %>
 
-     <div class="pop hidden backdrop-blur fixed top-0 left-0 h-screen w-screen  flex items-center justify-center ">
+     <div class="pop hidden backdrop-blur fixed top-20 left-0 h-screen w-screen  flex items-center justify-center ">
       
       <form action="/files" method="post" enctype="multipart/form-data"> 
-<div class="flex items-center text-white bg-gray-700 w-96">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 bg-neutral-secondary-medium border border-dashed border-default-strong rounded-2xl cursor-pointer hover:bg-gray-900 hover:text-black   ">
+<div class="flex items-center text-white  w-106">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64  bg-gray-600  border border-dashed border-default-strong rounded-2xl cursor-pointer hover:bg-gray-900 hover:text-black   ">
         <div class="flex flex-col items-center justify-center text-body pt-5 pb-6">
             <svg class="w-8 h-8 mb-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/></svg>
             <p class="mb-2 text-sm"><span class="font-semibold">Click to upload</span> or drag and drop</p>
@@ -106,7 +121,8 @@
         <input id="dropzone-file" type="file" class="hidden" name="file"/>
     </label>
 </div> 
-       <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4" type="submit">
+       <button class="bg-green-500  shadow-[0_0_20px_rgba(134,239,172,0.4)]  
+            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] text-white font-bold py-2 px-4 rounded mt-4" type="submit">
          Upload File
        </button>
 
@@ -116,6 +132,9 @@
         </button>
      </form>
      </div>
+     </main>
+
+  
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 

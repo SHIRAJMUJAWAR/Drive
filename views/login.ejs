@@ -11,24 +11,32 @@
     
 
     
-<form class="w-96" action="/" method="post">
+<form class="w-129 bg-black text-4xl h-90 items-center justify-center rounded-2xl border border-gray-700 shadow-[0_0_20px_rgba(134,239,172,0.4)] p-10
+            hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)]  transition-all duration-300 justify-center rounded-2xl"
+             action="/" method="post">
    
-        <div>
-            <label for="username" class="block mb-2.5 text-sm font-medium text-heading">username</label>
-            <input type="text" id="username" class=" bg-gray-900 text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="John"  required name="username"  />
+        <div class="mb-3">
+            <label for="username" class="block mb-2.5 text-lg font-medium text-heading">Username</label>
+            <input type="text" id="username" class=" bg-gray-900 text-heading text-sm rounded-2xl 
+            focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" 
+            placeholder="shiraj mujawar"  required name="username"  />
         </div>
 
      
     <div class="mb-6">
-        <label for="password" class="block mb-2.5 text-sm font-medium text-heading">Password</label>
+        <label for="password" class="block mb-2.5 text-lg font-medium text-heading">Password</label>
         <input type="password" id="password" class="bg-gray-900 border text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="•••••••••" required name="password"  />
     </div> 
     
-    <button type="submit" class="text-white bg-blue-400 box-border border border-transparent rounded-2xl hover:bg-gray-900 focus:ring-4 focus:ring-blue-400 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
-
-    <p>
-      <a href="/register"> Create a account</a>
-    </p>
+    <div class="justify-center flex items-center mb-2">
+      <button type="submit" class="text-black w-29 bg-green-400 box-border border
+     border-transparent rounded-2xl hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] text-center font-bold
+      focus:ring-4 focus:ring-blue-400 shadow-xs text-xl leading-5 rounded-base   px-4
+       py-2.5 focus:outline-none">Submit</button>
+    </div>
+     <div class="justify-center items-center flex">
+      <a href="/register"><p class="text-sm text-green-900"><u>Create a account</u></p> </a>
+     </div>
 
   </form>
 

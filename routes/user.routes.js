@@ -50,10 +50,7 @@ router.post(
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-        message: "Invalid login data"
-      })
+      return res.render('error', { errors: errors.array() })
     }
 
     const { username, password } = req.body
@@ -61,13 +58,13 @@ router.post(
     // ✅ find user
     const userDoc = await user.findOne({ username })
     if (!userDoc) {
-      return res.status(400).json({ message: "Invalid username or password" })
+      return res.status(400).render('error', { message: "Invalid username or password" })
     }
 
     // ✅ compare password
     const isMatch = await bcrypt.compare(password, userDoc.password)
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid username or password" })
+      return res.status(400).render('error', { message: "Invalid username or password" })
     }
 
     // ✅ CREATE JWT (IMPORTANT FIX)

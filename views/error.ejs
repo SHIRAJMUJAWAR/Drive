@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Error</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: #020617;
+      padding: 24px;
+      border-radius: 12px;
+      width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      color: #f87171;
+    }
+
+    .message {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background: #111827;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      border-left: 4px solid #ef4444;
+    }
+
+    .field {
+      font-weight: bold;
+      color: #93c5fd;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 10px;
+      background: #2563eb;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Invalid Data</h1>
+
+    <div class="message" id="mainMessage"></div>
+
+    <ul id="errorList"></ul>
+
+    <button onclick="goBack()">Go Back</button>
+  </div>
+
+  <script>
+    // Simulated API response (replace this with real fetch later)
+    const apiResponse = {
+      errors: [
+        {
+          type: "field",
+          value: "dd",
+          msg: "Invalid value",
+          path: "password",
+          location: "body"
+        },
+        {
+          type: "field",
+          value: "a",
+          msg: "Invalid value",
+          path: "username",
+          location: "body"
+        }
+      ],
+      message: "Invalid data or this not valid user"
+    };
+
+    document.getElementById("mainMessage").innerText = apiResponse.message;
+
+    const errorList = document.getElementById("errorList");
+
+    apiResponse.errors.forEach(err => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span class="field">${err.path}</span>: ${err.msg}
+      `;
+      errorList.appendChild(li);
+    });
+
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,41 +1,118 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
-    <title>Shiraj`s Drive</title>
-  </head>
-  <body class="bg-gray-100 dark:bg-gray-800 h-screen w-screen flex items-center justify-center text-black dark:text-white">
-    
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+  <title>Shiraj`s Drive</title>
+</head>
 
-    
-<form class="w-96" action="/register" method="post">
-   
-        <div>
-            <label for="username" class="block mb-2.5 text-sm font-medium text-heading">username</label>
-            <input type="text" id="username" class=" bg-gray-900 text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="John"  required name="username"  />
-        </div>
+<body class="bg-gray-100 dark:bg-gray-800 h-screen w-screen flex items-center justify-center text-white">
 
-    <div class="mb-6">
-        <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email address</label>
-        <input type="email" id="email" class="bg-gray-900 border text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="john.doe@company.com" required name="email" />
-    </div> 
-    <div class="mb-6">
-        <label for="password" class="block mb-2.5 text-sm font-medium text-heading">Password</label>
-        <input type="password" id="password" class="bg-gray-900 border text-heading text-sm rounded-2xl focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="•••••••••" required name="password"  />
-    </div> 
-    
-    <button type="submit" class="text-white bg-blue-400 box-border border border-transparent rounded-2xl hover:bg-gray-900 focus:ring-4 focus:ring-blue-400 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
+<form id="registerForm"
+  class="w-[32rem] bg-black rounded-2xl border border-gray-700 shadow-[0_0_20px_rgba(134,239,172,0.4)] p-10
+         hover:shadow-[0_0_35px_6px_rgba(134,239,172,0.7)] transition-all duration-300"
+  action="/register" method="post">
+
+  <!-- Username -->
+  <div class="mb-4">
+    <label class="block mb-2 text-lg font-medium">Username</label>
+    <input type="text" id="username" name="username"
+      class="bg-gray-900 rounded-2xl w-full px-3 py-2.5 outline-none border border-gray-700 focus:border-green-400"
+      placeholder="Shiraj Mujawar">
+    <p id="usernameError" class="text-red-400 text-sm mt-1 hidden"></p>
+  </div>
+
+  <!-- Email -->
+  <div class="mb-4">
+    <label class="block mb-2 text-lg font-medium">Email address</label>
+    <input type="email" id="email" name="email"
+      class="bg-gray-900 rounded-2xl w-full px-3 py-2.5 outline-none border border-gray-700 focus:border-green-400"
+      placeholder="shirajmujawar@gmail.com">
+  </div>
+
+  <!-- Password -->
+  <div class="mb-4">
+    <label class="block mb-2 text-lg font-medium">Password</label>
+    <input type="password" id="password" name="password"
+      class="bg-gray-900 rounded-2xl w-full px-3 py-2.5 outline-none border border-gray-700 focus:border-green-400"
+      placeholder="••••••••">
+    <p id="passwordError" class="text-red-400 text-sm mt-1 hidden"></p>
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="mb-6">
+    <label class="block mb-2 text-lg font-medium">Confirm Password</label>
+    <input type="password" id="confirmPassword"
+      class="bg-gray-900 rounded-2xl w-full px-3 py-2.5 outline-none border border-gray-700 focus:border-green-400"
+      placeholder="••••••••">
+    <p id="confirmError" class="text-red-400 text-sm mt-1 hidden"></p>
+  </div>
+
+  <!-- Submit -->
+  <div class="flex justify-center">
+    <button id="submitBtn" type="submit"
+      class="bg-green-400 text-black font-bold px-6 py-2.5 rounded-2xl opacity-50 cursor-not-allowed"
+      disabled>
+      Submit
+    </button>
+  </div>
+
 </form>
 
+<script>
+  const username = document.getElementById("username");
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
 
+  const usernameError = document.getElementById("usernameError");
+  const passwordError = document.getElementById("passwordError");
+  const confirmError = document.getElementById("confirmError");
 
-     
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js">
+  const submitBtn = document.getElementById("submitBtn");
 
-    </script>
+  function validateForm() {
+    let valid = true;
 
-  </body>
+    // Username
+    if (username.value.length <= 3) {
+      usernameError.textContent = "Username must be more than 3 characters";
+      usernameError.classList.remove("hidden");
+      valid = false;
+    } else {
+      usernameError.classList.add("hidden");
+    }
+
+    // Password
+    if (password.value.length <= 5) {
+      passwordError.textContent = "Password must be more than 5 characters";
+      passwordError.classList.remove("hidden");
+      valid = false;
+    } else {
+      passwordError.classList.add("hidden");
+    }
+
+    // Confirm password
+    if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+      confirmError.textContent = "Passwords do not match";
+      confirmError.classList.remove("hidden");
+      valid = false;
+    } else {
+      confirmError.classList.add("hidden");
+    }
+
+    // Button state
+    submitBtn.disabled = !valid;
+    submitBtn.classList.toggle("opacity-50", !valid);
+    submitBtn.classList.toggle("cursor-not-allowed", !valid);
+  }
+
+  username.addEventListener("input", validateForm);
+  password.addEventListener("input", validateForm);
+  confirmPassword.addEventListener("input", validateForm);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+</body>
 </html>
