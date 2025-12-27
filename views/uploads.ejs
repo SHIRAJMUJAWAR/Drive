@@ -66,7 +66,7 @@
                             </linearGradient>
                             </defs>
                             </i>
-                            Home  (<%=files.length%>)
+                            Home   
                         </div>
                     </button> </a>
                 </div>
@@ -212,6 +212,17 @@
 <main> 
 
     <div class=" h-screen overflow-y-auto p-6 pt-24">
+   <p class="flex items-center gap-2 text-gray-300 text-2xl mb-2 font-bold font-medium">
+  Files
+  <span
+    class="px-3 py-1 text-sm font-bold text-emerald-300
+           rounded-full bg-emerald-500/10
+           border border-emerald-500/30
+           shadow-[0_0_12px_rgba(16,185,129,0.6)]">
+    <%= files.length %>
+  </span>
+</p>
+
 
       <% if (!files || files.length === 0) { %>
 
@@ -361,7 +372,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
         </svg>
         <p class="text-sm"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-        <p class="text-xs text-gray-400 mt-1">SVG, PNG, JPG, GIF, PDF, MP3, MP4, ZIP, APK (MAX. 50MB)</p>
+        <p class="text-xs text-gray-400 mt-1">SVG, PNG, JPG, GIF, PDF, MP3, MP4, ZIP, APK (MAX.50MB)</p>
       </div>
       <input id="dropzone-file" type="file" class="hidden" name="file"/>
     </label>

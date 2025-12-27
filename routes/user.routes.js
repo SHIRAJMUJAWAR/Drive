@@ -4,6 +4,8 @@ const { body , validationResult } = require('express-validator');
 const user = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const File = require( '../models/file.model'); // ✅ REQUIRED
+
 
 // "/user/register" 
 router.get("/register" , (req,res) => {
@@ -97,7 +99,9 @@ router.get('/profile', async (req, res) => {
     }   
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userDoc = await user.findById(decoded.id).select('username email createdAt'); 
-    res.render('profile', { user: userDoc });
+    const userData = await user.findById(decoded.id);
+    const files = userData.urls || [];
+    res.render('profile', { user: userDoc, files });
   } catch (err) {
     console.error(err);
     res.status(500).render('error', { message: 'Server Error' });
