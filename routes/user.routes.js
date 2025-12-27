@@ -89,5 +89,28 @@ router.post(
   }
 )
 
+router.get('/profile', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).render('error', { message: 'Unauthorized' });
+    }   
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userDoc = await user.findById(decoded.id).select('username email createdAt'); 
+    res.render('profile', { user: userDoc });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('error', { message: 'Server Error' });
+  }
+});
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('token')
+  res.redirect('/')
+});
+
+ 
+
+
 
 module.exports = router;
