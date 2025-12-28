@@ -13,7 +13,7 @@ const upload = multer({ storage: multer.memoryStorage() })
 router.get('/files', auth, async (req, res) => {
   const user = await User.findById(req.userId).select('urls')
     const files = await File.find();
-console.log(files.map(f => f.fileType));
+ 
   res.render('uploads', { files: user.urls })
  
 
