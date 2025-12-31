@@ -24,6 +24,10 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
   try {
     if (!req.file) return res.redirect("/files");
 
+    if (!req.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     const filePath = `users/${req.userId}/${Date.now()}-${req.file.originalname}`;
 
     const { error } = await supabase.storage
@@ -38,17 +42,24 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
       .from("uploads")
       .getPublicUrl(filePath);
 
-    // ✅ SAVE INSIDE USER
-    await User.findByIdAndUpdate(req.userId, {
-      $push: {
-        urls: {
-          fileUrl: data.publicUrl,
-          fileName: req.file.originalname,
-          fileType: req.file.mimetype,
-          uploadedAt: new Date()
+    const updatedUser = await user.findByIdAndUpdate(
+      req.userId,
+      {
+        $push: {
+          urls: {
+            fileUrl: data.publicUrl,
+            fileName: req.file.originalname,
+            fileType: req.file.mimetype,
+            uploadedAt: new Date()
+          }
         }
-      }
-    });
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     res.redirect("/files");
   } catch (err) {
@@ -56,6 +67,7 @@ router.post("/files", auth, upload.single("file"), async (req, res) => {
     res.redirect("/files");
   }
 });
+
 
 
 router.post("/delete-file/:id", auth, async (req, res) => {

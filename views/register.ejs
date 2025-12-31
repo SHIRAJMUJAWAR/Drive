@@ -8,7 +8,7 @@
   <title>Shiraj's Drive - Sign Up</title>
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 h-screen w-screen flex items-center justify-center text-white">
+<body class="bg-gray-800 dark:bg-gray-900 h-screen w-screen flex items-center justify-center text-white">
 
 <form id="registerForm"
   class="w-full max-w-lg bg-gray-900 dark:bg-gray-800 rounded-2xl border border-gray-700 shadow-[0_0_25px_rgba(134,239,172,0.4)] p-10
@@ -43,15 +43,7 @@
     <p id="passwordError" class="text-red-400 text-sm mt-1 hidden"></p>
   </div>
 
-  <!-- Confirm Password -->
-  <div>
-    <label class="block mb-2 text-lg font-medium">Confirm Password</label>
-    <input type="password" id="confirmPassword"
-      class="bg-gray-800 rounded-2xl w-full px-4 py-2.5 outline-none border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 placeholder-gray-400 transition-all duration-200"
-      placeholder="••••••••">
-    <p id="confirmError" class="text-red-400 text-sm mt-1 hidden"></p>
-  </div>
-
+ 
   <!-- Submit -->
   <button id="submitBtn" type="submit"
     class="w-full py-2.5 bg-green-500 hover:bg-green-600 text-black font-bold rounded-2xl shadow-md hover:shadow-lg opacity-50 cursor-not-allowed transition-all duration-300"
@@ -60,7 +52,7 @@
   </button>
 
   <p class="text-center text-sm mt-2">
-    <a href="/login" class="text-green-400 hover:text-green-500 underline">Already have an account? Login</a>
+    <a href="/" class="text-green-400 hover:text-green-500 underline">Already have an account? Login</a>
   </p>
 
 </form>
@@ -68,12 +60,11 @@
 <script>
 const username = document.getElementById("username");
 const password = document.getElementById("password");
-const confirmPassword = document.getElementById("confirmPassword");
+ 
 
 const usernameError = document.getElementById("usernameError");
 const passwordError = document.getElementById("passwordError");
-const confirmError = document.getElementById("confirmError");
-
+ 
 const submitBtn = document.getElementById("submitBtn");
 
 function validateForm() {
@@ -99,15 +90,7 @@ function validateForm() {
     password.classList.remove("border-red-500");
   }
 
-  if (confirmPassword.value !== password.value || confirmPassword.value === "") {
-    confirmError.textContent = "Passwords do not match";
-    confirmError.classList.remove("hidden");
-    confirmPassword.classList.add("border-red-500");
-    valid = false;
-  } else {
-    confirmError.classList.add("hidden");
-    confirmPassword.classList.remove("border-red-500");
-  }
+ 
 
   submitBtn.disabled = !valid;
   submitBtn.classList.toggle("opacity-50", !valid);
@@ -116,7 +99,7 @@ function validateForm() {
 
 username.addEventListener("input", validateForm);
 password.addEventListener("input", validateForm);
-confirmPassword.addEventListener("input", validateForm);
+ 
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>

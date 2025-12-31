@@ -5,39 +5,64 @@ const user = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const File = require( '../models/file.model'); // ✅ REQUIRED
-
+ 
 
 // "/register" 
 router.get("/register" , (req,res) => {
     res.render('register'); 
 })
 
-router.post('/register' ,   
-     body('email').trim().isEmail().isLength({min:10}) ,
-     body('password').trim().isLength({min:5}),
-     body('username').trim().isLength({min:3}) ,
-    async ( req,res) =>{
+router.post(
+  '/register',
+  [
+    body('email').trim().isEmail().isLength({ min: 10 }),
+    body('password').trim().isLength({ min: 6 }),   // use >=6 for security
+    body('username').trim().isLength({ min: 3 })
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        // adjust render/json depending on your front-end expectations
+        return res.status(400).render('register', { errors: errors.array(), old: req.body });
+      }
 
-        const errors = validationResult(req);
- 
-         if (!errors.isEmpty()){
-            return res.status(400).json({
-                    errors: errors.array(),
-                 message: "Invalid registration data or thuis user already exists"
-                 });
-         }
-            const { username , email , password } = req.body;  
-            
-            const hashedPassword = await bcrypt.hash(password, 10);
+      const { username, email, password } = req.body;
 
-            const newuser = await user.create({
-                username,
-                email,
-                password: hashedPassword,
-            }); 
+      // check duplicate user
+      const existingUser = await user.findOne({ email });
+      if (existingUser) {
+        return res.status(400).render('register', { error: 'User already exists', old: req.body });
+      }
 
-            res.redirect('/home');
-})
+      // hash password and create user
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newuser = await user.create({
+        username,
+        email,
+        password: hashedPassword
+      });
+
+      // generate token
+      const token = jwt.sign({ userId: newuser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+      // set cookie (httpOnly)
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // true in production (https)
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+      });
+
+      // redirect to protected route
+      return res.redirect('/home');
+    } catch (err) {
+      console.error(err);
+      return res.status(500).render('register', { error: 'Server error' });
+    }
+  }
+);
+
 
 
 router.get("/", (req,res) => {
@@ -94,19 +119,30 @@ router.post(
 router.get('/profile', async (req, res) => {
   try {
     const token = req.cookies.token;
+
     if (!token) {
       return res.status(401).render('error', { message: 'Unauthorized' });
-    }   
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userDoc = await user.findById(decoded.id).select('username email createdAt'); 
-    const userData = await user.findById(decoded.id).populate('urls');
-    const files = userData.urls || [];
+
+    // ✅ FIX HERE
+    const userDoc = await user
+      .findById(decoded.userId)
+      .select('username email createdAt');
+
+    const userData = await user
+      .findById(decoded.userId);
+
+    const files = userData?.urls || [];
+
     res.render('profile', { user: userDoc, files });
   } catch (err) {
     console.error(err);
     res.status(500).render('error', { message: 'Server Error' });
   }
 });
+
 
 router.get('/logout', (req, res) => {
   res.clearCookie('token')

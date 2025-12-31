@@ -14,7 +14,7 @@
 
   <link rel="stylesheet" href="/sidebar.css">
 </head>
-<body class="bg-gray-800  overflow-x-hidden">
+<body class=" bg-gray-800  overflow-x-hidden">
 
   
         <div class="fixed top-0 z-50 w-full flex items-center justify-between px-1   p-1 lg:p-4 lg:px-4
@@ -41,8 +41,8 @@
     </div>
  
 
-    <body  >
-    <div class=" hidden sm:block sidebar left-0 top-0 h-screen w-90 bg-black border-r border-gray-700">       
+    <nav class=" sidebar1 flex bg-black" >
+   <aside class="hidden md:flex flex-col w-64     text-white ">      
         <div class="sidebar__header">
             <img src="/logo.png" width="44" height="44" viewBox="0 0 34 34">
                  
@@ -206,12 +206,11 @@
                 </div>
             </div>
         </div>
-    </div>
+   </aside>
  
+
  
- <script src="/home.js"></script>
- 
-</body>
+  </nav>
 
 <body class="bg-black text-white mt-20 relative">
 
@@ -431,7 +430,7 @@
 
 
    <div class="pop hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/50 z-50">
-  <form action="/files" method="post" enctype="multipart/form-data" class="bg-gray-900 rounded-2xl p-6 w-11/12 md:w-96 shadow-lg flex flex-col gap-4 relative">
+  <form action="/files" method="post"  enctype="multipart/form-data" id="uploadForm" class="bg-gray-900 rounded-2xl p-6 w-11/12 md:w-96 shadow-lg flex flex-col gap-4 relative">
 
     <!-- Close button -->
     <button type="button" onclick="hidepop()" 
@@ -453,17 +452,26 @@
     </label>
 
     <!-- Upload Button -->
-    <button type="submit" 
+    <button type="submit" id="uploadBtn"
             class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded shadow-md transition-all duration-300">
       Upload File
     </button>
+
+   <p id="uploadStatus" class="text-sm text-gray-300 hidden"></p>
+
+<div class="w-full bg-gray-700 rounded-full h-2 hidden" id="progressWrap">
+  <div id="progressBar" class="bg-green-500 h-2 rounded-full w-0 transition-all"></div>
+</div>
+
+
   </form>
 </div>
      </main>
 
   
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-
+ 
+ <script src="/home.js"></script>
 
  
 </body>
